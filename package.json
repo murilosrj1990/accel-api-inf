@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/murilosrj1990/accel-api-inf/issues"
   },
-  "homepage": "https://github.com/murilosrj1990/accel-api-inf#readme"
+  "homepage": "https://github.com/murilosrj1990/accel-api-inf#readme",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "http": "0.0.0",
+    "nodemon": "^1.19.1"
+  }
 }
