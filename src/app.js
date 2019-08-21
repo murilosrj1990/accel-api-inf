@@ -10,6 +10,6 @@ const indexRoute = require('./routes/index-route');
 const sessionsRoute = require('./routes/sessions-route');
 
 app.use( "/" , indexRoute );
-app.use( "/sessions/show/" , sessionsRoute );
+app.use( "/sessions/" , sessionsRoute );
 
 module.exports = app;

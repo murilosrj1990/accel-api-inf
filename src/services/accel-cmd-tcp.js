@@ -1,5 +1,5 @@
 net = require('net');
-const HOST = '10.0.0.5';
+const HOST = '127.0.0.1';
 const PORT = 2001;
         
 module.exports={
@@ -16,7 +16,6 @@ module.exports={
                 // Add a 'data' event handler for the client socket
                 // data is what the server sent to this socket
                 client.on('data', function(data) {
-                        console.log(data.toString());
                         data.toString();
                         var linhas=new Array();
                         linhas=data.toString().split("\n");
@@ -58,8 +57,7 @@ module.exports={
                         console.log(retorno);
                         res.status(200).send(retorno);
                         
-                        //Finaliza conexao
-                        console.log("Destruindo sessao tcp com accel");                      
+                        //Finaliza conexao                  
                         client.destroy();
 
                         
