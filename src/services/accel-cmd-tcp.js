@@ -1,5 +1,5 @@
 net = require('net');
-const HOST = '127.0.0.1';
+const HOST = '192.168.0.113';
 const PORT = 2001;
         
 module.exports={
@@ -8,7 +8,8 @@ module.exports={
                 var client = new net.Socket();
 
                 client.connect(PORT, HOST, function() {
-                        console.log('CONNECTED TO: ' + HOST + ':' + PORT);
+                        
+                        console.log( new Date().toLocaleString() + ' [info] Collecting info on accel sever(' + HOST + ':' + PORT+")");
                         // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
                         client.write('show sessions\n');
                 });
@@ -53,11 +54,9 @@ module.exports={
                         objeto={totalSessoes: sessoes.length,sessoes: sessoes};
                         retorno=objeto;
 
-
-                        console.log(retorno);
                         res.status(200).send(retorno);
                         
-                        //Finaliza conexao                  
+                        //Finaliza conexao TCP                
                         client.destroy();
 
                         
@@ -66,7 +65,6 @@ module.exports={
         
                 // Add a 'close' event handler for the client socket
                 client.on('close', function() {
-                console.log('Connection closed');
                 });                  
                 
         }
