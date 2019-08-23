@@ -4,7 +4,7 @@
   "description": "REST API to intermediate accel-ppp commands via http.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/murilosrj1990/accel-api-inf/issues"
   },
-  "homepage": "https://github.com/murilosrj1990/accel-api-inf#readme"
+  "homepage": "https://github.com/murilosrj1990/accel-api-inf#readme",
+  "dependencies": {
+    "@std/esm": "^0.26.0",
+    "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "http": "0.0.0",
+    "nodemon": "^1.19.1"
+  }
 }
