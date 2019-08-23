@@ -7,7 +7,7 @@
  Install
  
  - Install nvm in BRAS
- - Install nodejs version 10.0.0
+ - Install nodejs version v10.0.0
  - Install node module with: 
    $ npm install
  - Execute: 
