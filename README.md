@@ -8,9 +8,11 @@
  
  - Install nvm in BRAS
  - Install nodejs version v10.0.0
- - Install node module with: 
-   `$ npm install`
- - Execute: 
-   `$ node ./accel-api-inf/bin/server.js`
+ - Download code with git:
+   `$ git clone https://github.com/murilosrj1990/accel-api-inf.git`
+ - Enter in the directory and install node module with: 
+   `$ cd accel-api-inf ; npm install`
+ - Execute the server HTTP: 
+   `$ node ./bin/server.js`
  
  
