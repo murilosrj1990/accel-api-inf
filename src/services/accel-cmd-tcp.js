@@ -1,11 +1,12 @@
 net = require('net');
-const HOST = '127.0.0.1';
+const HOST = '10.0.0.5';
 const PORT = 2001;
         
 module.exports={
-        getSessions: async function (res){
+        getSessions: function (res){
                 var retorno;
                 var client = new net.Socket();
+                var dados="";
 
                 client.connect(PORT, HOST, function() {
                         
@@ -16,10 +17,18 @@ module.exports={
         
                 // Add a 'data' event handler for the client socket
                 // data is what the server sent to this socket
-                client.on('data', function(data) {
-                        data.toString();
+                client.on('data', function(data) {                        
+                        tamanhoDados=dados.length;
+                        dados=dados+data.toString();
+                        setTimeout(function(){
+                                client.destroy(); 
+                        },1000);                                                                
+                });
+        
+                // Add a 'close' event handler for the client socket
+                client.on('close', function() {
                         var linhas=new Array();
-                        linhas=data.toString().split("\n");
+                        linhas=dados.toString().split("\n");
                         var cabecalho=linhas.splice(0,1);
                         cabecalho=cabecalho[0].split("|");
                         for(var y=0;y<cabecalho.length;y++){
@@ -28,6 +37,7 @@ module.exports={
                         
                         linhas.splice(0,1);
                         linhas.splice((linhas.length - 1) , 1);
+                        //Build sessions for HTTP request return
                         sessoes = new Array();
                         for(var i=0;i<linhas.length;i++){
                                 var colunas=linhas[i].split("|");
@@ -41,25 +51,20 @@ module.exports={
                                 }
                                 sessao=sessao+"}";
                                 var sessionObject=JSON.parse(sessao);
-                                sessoes.push(sessionObject);                                
+                                sessoes.push(sessionObject);  
+                                
+                                
                         }
-        
-                        //Crate object for HTTP connection return                        
                         objeto={totalSessoes: sessoes.length,sessoes: sessoes};
                         retorno=objeto;
+                        //Send the accel return in the response HTTP
                         res.status(200).send(retorno);
-                        
-                        //Terminate TCP connection                
-                        client.destroy();                       
-                });
-        
-                // Add a 'close' event handler for the client socket
-                client.on('close', function() {
+                        dados="";
                 });                  
                 
         }
         ,
-        terminateSessionsByInterface: function (terminate_type,terminate_parameter,terminate_mode){
+        terminateSessionsByParameter: function (terminate_type,terminate_parameter,terminate_mode){
                 console.log(new Date().toLocaleString()+" [info] Send terminate session command");
                 var client = new net.Socket();
 
