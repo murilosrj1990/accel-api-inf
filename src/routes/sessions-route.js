@@ -2,10 +2,20 @@ const express = require('express');
 const router = express.Router();
 const sessions = require('../services/accel-cmd-tcp');
 
-router.get( '/' , ( req , res , next ) => {
+router.get( '/:orderBy' , ( req , res , next ) => {
+    const orderBy=req.params.orderBy;
     var objeto= new Promise(
         async function(resolve,reject){
-        await resolve(sessions.getSessions(res));
+        await resolve(sessions.getSessions(res,orderBy));
+    });
+    
+});
+
+router.get( '/' , ( req , res , next ) => {
+    const orderBy="sid";
+    var objeto= new Promise(
+        async function(resolve,reject){
+        await resolve(sessions.getSessions(res,orderBy));
     });
     
 });

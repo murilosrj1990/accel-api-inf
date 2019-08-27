@@ -1,18 +1,69 @@
 net = require('net');
-const HOST = '10.0.0.5';
+const HOST = '192.168.0.5';
 const PORT = 2001;
+
+function checkShowSessionOrderParameter(parameter){
+        
+        switch(parameter){
+                case "netns":
+                break;
+                case "ifname":
+                break;
+                case "ip":
+                break;
+                case "ip6":
+                break;
+                case "ip6-pd":
+                break;
+                case "type":
+                break;
+                case "state":
+                break;
+                case "uptime":
+                break;
+                case "uptime-raw":
+                break;
+                case "calling-sid":
+                break;
+                case "called-sid":
+                break;
+                case "sid":
+                break;
+                case "comp":
+                break;
+                case "sid":
+                break;
+                case "rx-bytes":
+                break;
+                case "tx-bytes":
+                break;
+                case "rx-bytes-raw":
+                break;
+                case "tx-bytes-raw":
+                break;
+                case "rx-pkts":
+                break;
+                case "tx-pkts":
+                break;
+                default:
+                        parameter="sid";
+        }
+        return parameter;
+}
         
 module.exports={
-        getSessions: function (res){
+        getSessions: function (res,order_parameter){
                 var retorno;
                 var client = new net.Socket();
                 var dados="";
+
+                order_parameter=checkShowSessionOrderParameter(order_parameter);
 
                 client.connect(PORT, HOST, function() {
                         
                         console.log( new Date().toLocaleString() + ' [info] Collecting info on accel sever(' + HOST + ':' + PORT+")");
                         // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
-                        client.write('show sessions\n');
+                        client.write('show sessions order '+order_parameter+'\n');
                 });
         
                 // Add a 'data' event handler for the client socket
