@@ -1,69 +1,110 @@
 net = require('net');
-const HOST = '192.168.0.5';
+const HOST = '10.0.0.11';
 const PORT = 2001;
 
-function checkShowSessionOrderParameter(parameter){
+function checkShowSessionsParameter(parameter){
+        parameterIsValid=false;
         
         switch(parameter){
                 case "netns":
+                        parameterIsValid=true;
                 break;
                 case "ifname":
+                        parameterIsValid=true;
                 break;
                 case "ip":
+                        parameterIsValid=true;
                 break;
                 case "ip6":
+                        parameterIsValid=true;
                 break;
                 case "ip6-pd":
+                        parameterIsValid=true;
                 break;
                 case "type":
+                        parameterIsValid=true;
                 break;
                 case "state":
+                        parameterIsValid=true;
                 break;
                 case "uptime":
+                        parameterIsValid=true;
                 break;
                 case "uptime-raw":
+                        parameterIsValid=true;
                 break;
                 case "calling-sid":
+                        parameterIsValid=true;
                 break;
                 case "called-sid":
+                        parameterIsValid=true;
                 break;
                 case "sid":
+                        parameterIsValid=true;
                 break;
                 case "comp":
+                        parameterIsValid=true;
                 break;
                 case "sid":
+                        parameterIsValid=true;
                 break;
                 case "rx-bytes":
+                        parameterIsValid=true;
                 break;
                 case "tx-bytes":
+                        parameterIsValid=true;
                 break;
                 case "rx-bytes-raw":
+                        parameterIsValid=true;
                 break;
                 case "tx-bytes-raw":
+                        parameterIsValid=true;
                 break;
                 case "rx-pkts":
+                        parameterIsValid=true;
                 break;
                 case "tx-pkts":
+                        parameterIsValid=true;
                 break;
-                default:
-                        parameter="sid";
+                case "rate-limit":
+                        parameterIsValid=true;
+                break;
         }
-        return parameter;
+        return parameterIsValid;
+}
+
+function filterStringParameterChain(stringChain){
+        var checkStringArray=stringChain.split(',');
+        var stringAux="";
+        for(var i=0;i<checkStringArray.length;i++){
+                if(checkShowSessionsParameter(checkStringArray[i])){
+                        if(i==0){
+                                stringAux=stringAux+checkStringArray[i]; 
+                        }else{
+                                stringAux=stringAux+","+checkStringArray[i];
+                        }
+               }
+        }
+        stringChain=stringAux;
+        return stringChain;
 }
         
 module.exports={
-        getSessions: function (res,order_parameter){
+        getSessions: function (res,order_parameter,columns){
                 var retorno;
                 var client = new net.Socket();
                 var dados="";
-
-                order_parameter=checkShowSessionOrderParameter(order_parameter);
+                columns=filterStringParameterChain(columns);
+                orderParameterIsValid=checkShowSessionsParameter(order_parameter);
+                if(!orderParameterIsValid){
+                        order_parameter="sid";
+                }
 
                 client.connect(PORT, HOST, function() {
                         
                         console.log( new Date().toLocaleString() + ' [info] Collecting info on accel sever(' + HOST + ':' + PORT+")");
                         // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
-                        client.write('show sessions order '+order_parameter+'\n');
+                        client.write('show sessions '+columns+' order '+order_parameter+'\n');
                 });
         
                 // Add a 'data' event handler for the client socket
