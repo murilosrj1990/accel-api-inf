@@ -1,7 +1,8 @@
 net = require('net');
-const HOST = '10.0.0.11';
+const HOST = '127.0.0.1';
 const PORT = 2001;
 
+//Check function for parameters send by URL 
 function checkShowSessionsParameter(parameter){
         parameterIsValid=false;
         
@@ -72,7 +73,7 @@ function checkShowSessionsParameter(parameter){
         }
         return parameterIsValid;
 }
-
+//Filter function for exclude invalid strings
 function filterStringParameterChain(stringChain){
         var checkStringArray=stringChain.split(',');
         var stringAux="";
@@ -95,8 +96,9 @@ module.exports={
                 var client = new net.Socket();
                 var dados="";
                 columns=filterStringParameterChain(columns);
-                orderParameterIsValid=checkShowSessionsParameter(order_parameter);
-                if(!orderParameterIsValid){
+                var orderParameterIsValid=checkShowSessionsParameter(order_parameter);
+                if(orderParameterIsValid){
+                }else{
                         order_parameter="sid";
                 }
 

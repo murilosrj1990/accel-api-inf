@@ -6,9 +6,9 @@ router.get( '/' , ( req , res , next ) => {
     var orderBy;
     var columns;
     if(typeof req.query.orderBy==='undefined'){
-        columns="";
+        orderBy="";
     }else{
-        columns=req.query.orderBy;;
+        orderBy=req.query.orderBy;;
     }
 
     if(typeof req.query.columns==='undefined'){
